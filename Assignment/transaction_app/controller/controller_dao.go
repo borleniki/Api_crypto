@@ -1,9 +1,9 @@
 package controller
 
 import (
+	"strconv"
 	"transactionapp/model"
 	"transactionapp/service"
-	"strconv"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -54,4 +54,29 @@ func DeleteAccount(c *fiber.Ctx) error {
 		return c.Status(500).JSON(fiber.Map{"error": err.Error()})
 	}
 	return c.JSON(fiber.Map{"message": "Account deleted"})
+}
+func TransferAmount(c *fiber.Ctx) error {
+	var payload struct {
+		FromID int     `json:"from_acc"`
+		ToID   int     `json:"to_acc"`
+		Amount float64 `json:"amount"`
+	}
+	if err := c.BodyParser(&payload); err != nil {
+		return c.Status(400).JSON(fiber.Map{"error": err.Error()})
+	}
+
+	if err := service.TransferAmount(payload.FromID, payload.ToID, payload.Amount); err != nil {
+		return c.Status(400).JSON(fiber.Map{"error": err.Error()})
+	}
+
+	return c.JSON(fiber.Map{"message": "Transfer successful"})
+}
+
+func MiniStatement(c *fiber.Ctx) error {
+	id, _ := strconv.Atoi(c.Params("id"))
+	txns, err := service.MiniStatement(id)
+	if err != nil {
+		return c.Status(500).JSON(fiber.Map{"error": err.Error()})
+	}
+	return c.JSON(txns)
 }

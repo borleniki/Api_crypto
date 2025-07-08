@@ -13,4 +13,6 @@ func SetupRoutes(app *fiber.App) {
 	api.Post("/", controller.CreateAccount)
 	api.Put("/:id", controller.UpdateAccount)
 	api.Delete("/:id", controller.DeleteAccount)
+	app.Post("/transfer", controller.TransferAmount)
+	app.Get("/:id/mini-statement", controller.MiniStatement)
 }

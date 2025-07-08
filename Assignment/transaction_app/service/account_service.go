@@ -24,3 +24,11 @@ func Update(id int, account model.Account) error {
 func Delete(id int) error {
 	return dao.DeleteAccount(id)
 }
+
+func TransferAmount(fromID, toID int, amount float64) error {
+	return dao.TransferAmount(fromID, toID, amount)
+}
+
+func MiniStatement(accountID int) ([]model.Transaction, error) {
+	return dao.MiniStatement(accountID)
+}
