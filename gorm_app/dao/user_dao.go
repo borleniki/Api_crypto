@@ -5,15 +5,26 @@ import (
 	"gormapp/model"
 )
 
+// func GetAllUsers() ([]model.User, error) {
+// 	var users []model.User
+// 	err := config.DB.Find(&users).Error //select * from users
+// 	return users, err
+// }
+
+//	func GetUserByID(id int) (model.User, error) {
+//		var user model.User
+//		err := config.DB.First(&user, id).Error //select * from users where id = ?
+//		return user, err
+//	}
 func GetAllUsers() ([]model.User, error) {
 	var users []model.User
-	err := config.DB.Find(&users).Error //select * from users
+	err := config.DB.Preload("Profile").Find(&users).Error
 	return users, err
 }
 
 func GetUserByID(id int) (model.User, error) {
 	var user model.User
-	err := config.DB.First(&user, id).Error //select * from users where id = ?
+	err := config.DB.Preload("Profile").First(&user, id).Error
 	return user, err
 }
 func CreateUser(user model.User) error {

@@ -5,7 +5,7 @@ type User struct {
 	Name  string `json:"name"`
 	Email string `json:"email"`
 
-	//Profile Profile `gorm:"foreignKey:UserID" json:"profile"` //ONE-TO-ONE relationship
+	Profile Profile `gorm:"foreignKey:UserID" json:"profile"` //ONE-TO-ONE relationship
 
-	//Orders []Order `gorm:"foreignKey:UserID" json:"orders"` //ONE-TO-MANY relationship
+	Orders []Order `gorm:"foreignKey:UserID" json:"orders"` //ONE-TO-MANY relationship
 }

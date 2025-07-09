@@ -4,8 +4,8 @@ import (
 	"gormapp/config"
 	"gormapp/model"
 	"gormapp/router"
+
 	"github.com/gofiber/fiber/v2"
-	
 )
 
 func main() {
@@ -13,11 +13,11 @@ func main() {
 
 	config.ConnectDB()
 
-	config.DB.AutoMigrate(&model.User{}) //it ll create table in database automatically
+	// config.DB.AutoMigrate(&model.User{}) //it ll create table in database automatically
 
 	//config.DB.AutoMigrate(&model.User{}, &model.Profile{})
 
-	//config.DB.AutoMigrate(&model.User{}, &model.Profile{}, &model.Order{})
+	config.DB.AutoMigrate(&model.User{}, &model.Profile{}, &model.Order{})
 
 	router.SetupRoutes(app)
 
