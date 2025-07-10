@@ -28,7 +28,8 @@ func GetUserByID(id int) (model.User, error) {
 	return user, err
 }
 func CreateUser(user model.User) error {
-	return config.DB.Create(&user).Error //insert into users (name, email) values (?, ?)
+	// return config.DB.Create(&user).Error //insert into users (name, email) values (?, ?)
+	return config.DB.Exec("CALL CreateUser(?, ?)", user.Name, user.Email).Error
 }
 
 func UpdateUser(user model.User) error {
