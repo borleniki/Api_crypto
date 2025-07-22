@@ -5,9 +5,36 @@ import (
 	"fmt"
 	"kafka-redis/database"
 	"kafka-redis/models"
+	"time"
 
 	"github.com/gofiber/fiber/v2"
 )
+
+func GetUsers(c *fiber.Ctx) error {
+	cacheKey := fmt.Sprintf("users:%d", time.Now().Unix())
+	// Check Redis cache first
+	val, err := database.Rdb.Get(database.Ctx, cacheKey).Result()
+	if err == nil {
+		var users []models.User
+		if err := json.Unmarshal([]byte(val), &users); err == nil {
+			fmt.Println("Fetched all users from Redis")
+			return c.JSON(users)
+		}
+	}
+	// If not found in Redis, fetch from MySQL
+	fmt.Println("Fetching users from MySQL")
+	var users []models.User
+	if err := database.DB.Find(&users).Error; err != nil {
+		return c.Status(500).JSON(fiber.Map{"error": "Failed to fetch users"})
+	}
+
+	// Cache the users in Redis
+	usersJSON1, _ := json.Marshal(users)
+	database.Rdb.Set(database.Ctx, cacheKey, usersJSON1, 0)
+
+	fmt.Println("Fetched all users and cached in Redis")
+	return c.JSON(users)
+}
 
 func GetUser(c *fiber.Ctx) error {
 	id := c.Params("id")

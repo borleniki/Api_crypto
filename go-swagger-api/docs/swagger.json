@@ -1,0 +1,40 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This is Fiber REST API with Swagger",
+        "title": "Rajesh Swagger API",
+        "contact": {
+            "name": "Rajesh API Support",
+            "url": "https://rkcptraining.com",
+            "email": "upadhyay.rajesh@rediffmail.com"
+        },
+        "version": "1.0"
+    },
+    "host": "localhost:3000",
+    "basePath": "/",
+    "paths": {
+        "/hello": {
+            "get": {
+                "description": "Say Hello",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Example"
+                ],
+                "summary": "Greet the world",
+                "responses": {
+                    "200": {
+                        "description": "Hello, World!",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,27 @@
+basePath: /
+host: localhost:3000
+info:
+  contact:
+    email: upadhyay.rajesh@rediffmail.com
+    name: Rajesh API Support
+    url: https://rkcptraining.com
+  description: This is Fiber REST API with Swagger
+  title: Rajesh Swagger API
+  version: "1.0"
+paths:
+  /hello:
+    get:
+      consumes:
+      - application/json
+      description: Say Hello
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Hello, World!
+          schema:
+            type: string
+      summary: Greet the world
+      tags:
+      - Example
+swagger: "2.0"
